@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bouncing Ball</title>
+  <style>
+    body {
+      margin: 0;
+      background: #1a1a2e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    canvas {
+      border: 2px solid #e94560;
+      border-radius: 8px;
+      background: #16213e;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="600" height="400"></canvas>
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    const ball = {
+      x: 300, y: 200,
+      radius: 20,
+      dx: 4, dy: 3,
+      color: "#e94560"
+    };
+
+    function drawBall() {
+      ctx.beginPath();
+      ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+
+      const gradient = ctx.createRadialGradient(
+        ball.x - 6, ball.y - 6, 3,
+        ball.x, ball.y, ball.radius
+      );
+      gradient.addColorStop(0, "#ff8fa3");
+      gradient.addColorStop(1, "#e94560");
+
+      ctx.fillStyle = gradient;
+      ctx.shadowColor = "#e94560";
+      ctx.shadowBlur = 15;
+      ctx.fill();
+      ctx.closePath();
+      ctx.shadowBlur = 0;
+    }
+
+    function update() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      drawBall();
+
+      if (ball.x + ball.radius >= canvas.width || ball.x - ball.radius <= 0) {
+        ball.dx *= -1;
+      }
+      if (ball.y + ball.radius >= canvas.height || ball.y - ball.radius <= 0) {
+        ball.dy *= -1;
+      }
+
+      ball.x += ball.dx;
+      ball.y += ball.dy;
+
+      requestAnimationFrame(update);
+    }
+
+    update();
+  </script>
+</body>
+</html>
