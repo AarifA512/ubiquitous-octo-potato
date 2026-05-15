@@ -2,20 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bouncing Ball</title>
   <style>
-    body {
-      margin: 0;
-      background: #1a1a2e;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    canvas {
-      background: #16213e;
-      border: 2px solid #e94560;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1a1a2e; overflow: hidden; }
+    canvas { display: block; }
   </style>
 </head>
 <body>
@@ -24,15 +16,21 @@
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
 
-    canvas.width = 600;
-    canvas.height = 400;
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener("resize", resize);
 
-    let x = 300, y = 200;
+    let x = canvas.width / 2;
+    let y = canvas.height / 2;
     let dx = 4, dy = 3;
-    const radius = 20;
+    const radius = 30;
 
     function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#1a1a2e";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.beginPath();
       ctx.arc(x, y, radius, 0, Math.PI * 2);
@@ -40,8 +38,10 @@
       ctx.fill();
       ctx.closePath();
 
-      if (x + radius >= canvas.width || x - radius <= 0) dx = -dx;
-      if (y + radius >= canvas.height || y - radius <= 0) dy = -dy;
+      if (x + radius >= canvas.width)  { x = canvas.width - radius;  dx = -Math.abs(dx); }
+      if (x - radius <= 0)             { x = radius;                  dx =  Math.abs(dx); }
+      if (y + radius >= canvas.height) { y = canvas.height - radius;  dy = -Math.abs(dy); }
+      if (y - radius <= 0)             { y = radius;                  dy =  Math.abs(dy); }
 
       x += dx;
       y += dy;
