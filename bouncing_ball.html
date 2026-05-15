@@ -11,67 +11,45 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      overflow: hidden;
     }
     canvas {
-      border: 2px solid #e94560;
-      border-radius: 8px;
       background: #16213e;
+      border: 2px solid #e94560;
     }
   </style>
 </head>
 <body>
-  <canvas id="canvas" width="600" height="400"></canvas>
-
+  <canvas id="canvas"></canvas>
   <script>
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
 
-    const ball = {
-      x: 300, y: 200,
-      radius: 20,
-      dx: 4, dy: 3,
-      color: "#e94560"
-    };
+    canvas.width = 600;
+    canvas.height = 400;
 
-    function drawBall() {
-      ctx.beginPath();
-      ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+    let x = 300, y = 200;
+    let dx = 4, dy = 3;
+    const radius = 20;
 
-      const gradient = ctx.createRadialGradient(
-        ball.x - 6, ball.y - 6, 3,
-        ball.x, ball.y, ball.radius
-      );
-      gradient.addColorStop(0, "#ff8fa3");
-      gradient.addColorStop(1, "#e94560");
-
-      ctx.fillStyle = gradient;
-      ctx.shadowColor = "#e94560";
-      ctx.shadowBlur = 15;
-      ctx.fill();
-      ctx.closePath();
-      ctx.shadowBlur = 0;
-    }
-
-    function update() {
+    function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      drawBall();
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fillStyle = "#e94560";
+      ctx.fill();
+      ctx.closePath();
 
-      if (ball.x + ball.radius >= canvas.width || ball.x - ball.radius <= 0) {
-        ball.dx *= -1;
-      }
-      if (ball.y + ball.radius >= canvas.height || ball.y - ball.radius <= 0) {
-        ball.dy *= -1;
-      }
+      if (x + radius >= canvas.width || x - radius <= 0) dx = -dx;
+      if (y + radius >= canvas.height || y - radius <= 0) dy = -dy;
 
-      ball.x += ball.dx;
-      ball.y += ball.dy;
+      x += dx;
+      y += dy;
 
-      requestAnimationFrame(update);
+      requestAnimationFrame(draw);
     }
 
-    update();
+    draw();
   </script>
 </body>
 </html>
