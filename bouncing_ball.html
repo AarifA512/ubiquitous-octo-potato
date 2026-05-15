@@ -6,50 +6,36 @@
   <title>Bouncing Ball</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #1a1a2e; overflow: hidden; }
-    canvas { display: block; }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      background: #1a1a2e;
+      overflow: hidden;
+    }
+
+    .ball {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #e94560;
+      position: absolute;
+      animation: moveX 2s linear infinite alternate,
+                 moveY 1.5s linear infinite alternate;
+    }
+
+    @keyframes moveX {
+      from { left: 0; }
+      to   { left: calc(100vw - 60px); }
+    }
+
+    @keyframes moveY {
+      from { top: 0; }
+      to   { top: calc(100vh - 60px); }
+    }
   </style>
 </head>
 <body>
-  <canvas id="canvas"></canvas>
-  <script>
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener("resize", resize);
-
-    let x = canvas.width / 2;
-    let y = canvas.height / 2;
-    let dx = 4, dy = 3;
-    const radius = 30;
-
-    function draw() {
-      ctx.fillStyle = "#1a1a2e";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.beginPath();
-      ctx.arc(x, y, radius, 0, Math.PI * 2);
-      ctx.fillStyle = "#e94560";
-      ctx.fill();
-      ctx.closePath();
-
-      if (x + radius >= canvas.width)  { x = canvas.width - radius;  dx = -Math.abs(dx); }
-      if (x - radius <= 0)             { x = radius;                  dx =  Math.abs(dx); }
-      if (y + radius >= canvas.height) { y = canvas.height - radius;  dy = -Math.abs(dy); }
-      if (y - radius <= 0)             { y = radius;                  dy =  Math.abs(dy); }
-
-      x += dx;
-      y += dy;
-
-      requestAnimationFrame(draw);
-    }
-
-    draw();
-  </script>
+  <div class="ball"></div>
 </body>
 </html>
