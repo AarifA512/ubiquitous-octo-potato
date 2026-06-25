@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UAE AI News — Live Aggregator</title>
+  <meta name="description" content="A live aggregator of news articles about Artificial Intelligence in the United Arab Emirates." />
+  <link rel="preconnect" href="https://news.google.com" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark">🇦🇪</span>
+      <div>
+        <h1>UAE&nbsp;AI&nbsp;News</h1>
+        <p class="tagline">Live news on Artificial Intelligence across the Emirates</p>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="search-box">
+        <input
+          id="search"
+          type="search"
+          placeholder="Refine search (e.g. Dubai AI, G42, chatbot)…"
+          autocomplete="off"
+          aria-label="Search query"
+        />
+        <button id="searchBtn" type="button">Search</button>
+      </div>
+      <button id="refreshBtn" class="ghost" type="button" title="Reload latest articles">↻ Refresh</button>
+    </div>
+
+    <nav class="topics" id="topics" aria-label="Topic filters"></nav>
+  </header>
+
+  <main>
+    <p id="status" class="status" role="status" aria-live="polite">Loading the latest articles…</p>
+    <section id="grid" class="grid" aria-label="News articles"></section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Sources aggregated from Google News. Updated <span id="updated">—</span>.
+      Built as a static site — no server required.
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
